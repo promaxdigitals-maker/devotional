@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Devotional Moment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Devotional"><meta name="theme-color" content="#1f4d3c"><link rel="manifest" href="/manifest.webmanifest"><link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Figtree:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#f6f4ee;--bg2:#e7eee3;--ink:#1d3a2f;--soft:#4f6b5c;--accent:#1f4d3c;--on:#fff;--chip:#e8efe7;--track:#d6dfd4;--card:#fffdf8;--line:#d3ddd0;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a15;--bg2:#15291f;--ink:#e6efe8;--soft:#9fb8a9;--accent:#7fbf9c;--on:#0f1a15;--chip:#1a2a22;--track:#26382e;--card:#16241d;--line:#2a3d33}}
+:root[data-theme="dark"]{--bg:#0f1a15;--bg2:#15291f;--ink:#e6efe8;--soft:#9fb8a9;--accent:#7fbf9c;--on:#0f1a15;--chip:#1a2a22;--track:#26382e;--card:#16241d;--line:#2a3d33}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:radial-gradient(120% 55% at 50% 0,var(--bg2),var(--bg));background-color:var(--bg);color:var(--ink);font-family:Figtree,system-ui,sans-serif;display:flex;justify-content:center}
+.app{width:100%;max-width:480px;min-height:100%;display:flex;flex-direction:column;padding:16px 22px 18px}
+.top{display:flex;align-items:center;gap:10px;color:var(--soft);font-size:14px;min-height:40px}
+.top[hidden]{visibility:hidden}
+.back,.gear{background:none;border:0;color:var(--soft);font-size:22px;cursor:pointer;min-width:36px;height:36px}
+.back:disabled{opacity:.25;cursor:default}
+.track{flex:1;height:6px;border-radius:3px;background:var(--track);overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:3px;transition:width .4s}
+main{flex:1;display:flex;flex-direction:column;padding-top:14px}
+main:focus,h1:focus{outline:none}
+.in{animation:rise .45s both}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+h1{font-family:Newsreader,Georgia,serif;font-weight:500;font-size:32px;line-height:1.15;margin:6px 0 10px;text-align:center}
+.sub{text-align:center;color:var(--soft);font-size:17px;line-height:1.45;margin:0 0 22px}
+.logo{width:40px;height:40px;border-radius:11px;background:var(--accent);color:var(--on);display:grid;place-items:center;font-family:Newsreader,Georgia,serif;font-size:24px}
+.logo.big{width:84px;height:84px;font-size:50px;border-radius:24px;position:relative;box-shadow:0 12px 30px rgba(31,77,60,.3)}
+.hero{position:relative;height:200px;display:grid;place-items:center}
+.glow{position:absolute;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,#f3c97a 0,rgba(243,201,122,.35) 40%,transparent 70%);animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.12);opacity:.8}}
+.vt{font-family:Newsreader,Georgia,serif;font-style:italic;font-size:19px;line-height:1.5;text-align:center;color:var(--soft);margin:8px 6px 0}
+.vt b{display:block;font:600 13px Figtree,sans-serif;font-style:normal;margin-top:8px;color:var(--accent)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opts.apps{display:grid;grid-template-columns:1fr 1fr}
+.opt{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;padding:16px 18px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;font:500 17px/1.3 Figtree,system-ui,sans-serif;cursor:pointer;transition:.2s}
+.opt small{display:block;color:var(--soft);font-weight:400;font-size:14px;margin-top:3px}
+.opt i{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);flex:none;margin-left:12px}
+.opt.on{border-color:var(--accent);background:var(--chip)}
+.opt.on i{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 4px var(--chip)}
+.opt:focus-visible,.cta:focus-visible,.skip:focus-visible,.chip:focus-visible,.back:focus-visible,.gear:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.count{text-align:center;color:var(--soft);font-size:14px;margin:14px 0 0}
+.foot{position:sticky;bottom:0;margin-top:auto;padding:18px 0 6px;background:linear-gradient(transparent,var(--bg) 35%)}
+.cta{width:100%;border:0;border-radius:18px;background:var(--accent);color:var(--on);font:600 19px Figtree,system-ui,sans-serif;padding:19px;cursor:pointer;box-shadow:0 8px 20px rgba(31,77,60,.22)}
+.cta:disabled{opacity:.38;cursor:default;box-shadow:none}
+.cta.alt{background:var(--chip);color:var(--accent);box-shadow:none;margin-top:10px}
+.skip{display:block;background:none;border:0;color:var(--soft);text-decoration:underline;font:500 16px Figtree,system-ui,sans-serif;margin:14px auto 0;cursor:pointer;padding:6px}
+.note{text-align:center;color:var(--soft);font-size:14px;margin:12px 0 0;line-height:1.45}
+.chip{align-self:center;background:var(--chip);color:var(--accent);padding:9px 16px;border:0;border-radius:999px;font:600 15px Figtree,system-ui,sans-serif;margin-bottom:20px;cursor:pointer}
+.verse-text{font-family:Newsreader,Georgia,serif;font-style:italic;font-size:18px;line-height:1.5;background:var(--chip);border-radius:14px;padding:14px 16px;margin:0 0 20px}
+.body{font-family:Newsreader,Georgia,serif;font-size:23px;line-height:1.5;color:var(--soft);margin:0 0 22px}
+.body.big{font-size:24px;color:var(--ink);text-align:center}
+.streak{text-align:center;font-family:Newsreader,Georgia,serif;font-size:60px;margin:6px 0 0;color:var(--accent)}
+.center{text-align:center}
+.phone{width:200px;height:330px;margin:4px auto 16px;border:6px solid var(--ink);border-radius:32px;overflow:hidden;position:relative;background:var(--card)}
+.scr{position:absolute;inset:0}
+.ic{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:46px 18px;transition:.4s}
+.ic b{aspect-ratio:1;border-radius:14px;display:block}
+.tap{position:absolute;left:22px;top:44px;width:46px;height:46px;border-radius:50%;border:3px solid var(--accent);opacity:0;transition:.3s;animation:pulse 1.4s infinite}
+.sheet{position:absolute;left:0;right:0;bottom:0;padding:18px 16px 20px;background:var(--bg);border-radius:20px 20px 0 0;transform:translateY(105%);transition:transform .5s;text-align:center;box-shadow:0 -10px 30px rgba(0,0,0,.18)}
+.sheet small{color:var(--soft);display:block;margin-bottom:6px;font-size:11px}
+.sheet strong{font:500 17px/1.2 Newsreader,Georgia,serif;display:block;margin-bottom:12px}
+.sheet .btn{display:block;background:var(--accent);color:var(--on);border-radius:12px;padding:9px;font:600 13px Figtree,sans-serif}
+.opened{position:absolute;inset:0;background:#e1306c;color:#fff;display:grid;place-items:center;font:600 16px Figtree,sans-serif;opacity:0;transition:opacity .4s}
+.scr[data-s="0"] .tap{opacity:1}
+.scr[data-s="1"] .sheet{transform:none}
+.scr[data-s="1"] .ic{filter:blur(2px) opacity(.5)}
+.scr[data-s="2"] .opened{opacity:1}
+.cap{text-align:center;font-weight:600;color:var(--accent);margin:0 0 8px;min-height:22px}
+.steps{padding-left:22px;margin:0;color:var(--ink);font-size:16px;line-height:1.5}
+.steps li{margin-bottom:12px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top" id="bar"><button class="back" id="back" aria-label="Back">←</button><div class="track"><div class="fill" id="fill"></div></div><span id="count"></span><button class="gear" id="gear" aria-label="Change my answers">⚙</button></div>
+  <main id="main"></main>
+</div>
+<script>
+var SB="https://nddjtnqgafpzazhpzvpo.supabase.co",KEYPUB="sb_publishable_hr7ViHKvl1bqRJdZ-qlAFg_NnIkIFsv";
+var KEY="devmoment:v2",CK="devmoment:cards",PK="devmoment:profile",st={},P={done:false,A:{}};
+try{st=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+try{P=JSON.parse(localStorage.getItem(PK)||"null")||P}catch(e){}
+function put(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var FREQ=["Almost every day","A few times a week","Once in a while","I pray first and want to keep it up"];
+var GOALS=["Start my day with God","Pray more consistently","Know what to say when I pray","Stop letting scrolling take over","Feel closer to God"];
+var GOALP=["start your day with God","pray more consistently","know what to say when you pray","stop letting scrolling take over","feel closer to God"];
+var BLOCK=["I scroll without thinking","I get busy and forget","I struggle to find words","I struggle to stay consistent","I feel tired or discouraged"];
+var HEART=[["Money & provision","money and provision",[10]],["Work, business or career","your work, business or career",[10,3]],["Addiction & habits I want to break","the habits you want to break",[5,4]],["Family","your family",[7]],["My future & direction","your future and direction",[2,3]],["Safety & protection","safety and protection",[13]],["Anxiety & uncertainty","anxiety and uncertainty",[11,4]],["My relationship with God","your relationship with God",[0]],["Discipline & consistency","discipline and consistency",[0,3]],["Something else","what is on your heart",[]]];
+var APPS=["Instagram","TikTok","Facebook","X","YouTube","Snapchat","WhatsApp","Other","Betting apps"];
+var STYLE=[["Follow a short prayer","We’ll give you the words."],["Use my own words","Take the moment and pray freely."],["Choose each time","Pick guided or your own words whenever the prayer moment appears."]];
+var FIRST={t:"Start with the Holy Spirit.",r:"John 14:26",v:"But the Comforter, which is the Holy Ghost, whom the Father will send in my name, he shall teach you all things, and bring all things to your remembrance, whatsoever I have said unto you.",p:"Father, I open my heart to You. I can’t stay consistent in my own strength, so I ask for the help of Your Holy Spirit. Strengthen me to put You first. Remind me every morning, before any app and before any other voice, that You are the One I want to talk to first. Draw me back whenever I forget, and make this moment the best part of my day. In Jesus’ name, amen."};
+var A=P.A||{},step=P.done?-1:0,TOT=11,rows=null,tick=null;
+var C=[],N=0,i=0,prayed=0,showV=false,showP=false,sess=null;
+var main=document.getElementById("main"),fill=document.getElementById("fill"),count=document.getElementById("count"),back=document.getElementById("back"),bar=document.getElementById("bar");
+var now=new Date(),today=dkey(now),yest=dkey(new Date(now.getTime()-864e5));
+var D=Math.floor((now.getTime()-now.getTimezoneOffset()*6e4)/864e5);
+function dkey(d){return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function mark(){if(st.last!==today){st.streak=(st.last===yest)?(st.streak||0)+1:1;st.last=today;put(KEY,st)}}
+function head(t,s){return'<h1 tabindex="-1">'+t+'</h1>'+(s?'<p class="sub">'+s+'</p>':'')}
+function foot(txt,ok){return'<div class="foot"><button class="cta" id="go"'+(ok?'':' disabled')+'>'+txt+'</button></div>'}
+function list(k,items,multi,max,cls){var sel=A[k]||[];return'<div class="opts '+(cls||'')+'" data-k="'+k+'" data-x="'+(multi?1:0)+'" data-m="'+(max||0)+'">'+items.map(function(x,j){var on=sel.indexOf(j)>-1,l=x instanceof Array?x[0]:x;return'<button class="opt'+(on?' on':'')+'" data-j="'+j+'" role="'+(multi?'checkbox':'radio')+'" aria-checked="'+on+'"><span>'+esc(l)+(x instanceof Array&&x[1]&&typeof x[1]==="string"?'<small>'+esc(x[1])+'</small>':'')+'</span><i></i></button>'}).join('')+'</div>'}
+function has(k){return(A[k]||[]).length>0}
+function onb(anim){
+  clearInterval(tick);bar.hidden=step===0;back.disabled=step===0;count.textContent="";fill.style.width=(step/(TOT-1)*100)+"%";
+  var s=step,h="",ok=true,cta="Continue",hs=A.heart||[];
+  if(s===0){h='<div class="hero"><div class="glow"></div><div class="logo big">D</div></div>'+head("Before the world speaks, hear Him.","A short moment with God each morning, before any other app.")+'<p class="vt">“My voice shalt thou hear in the morning, O LORD.”<b>Psalm 5:3</b></p><p class="note">Private by design: no account, and your answers stay on your phone.</p>';cta="Begin"}
+  else if(s===1){h=head("See how it works")+'<div class="phone"><div class="scr" id="scr" data-s="0"><div class="ic"><b style="background:#e1306c"></b><b style="background:#2b7bff"></b><b style="background:#25d366"></b><b style="background:#111"></b><b style="background:#ff2d2d"></b><b style="background:#f7c500"></b></div><div class="tap"></div><div class="sheet"><small>Prayer moment</small><strong>He has promised to guide you.</strong><span class="btn">I’ve prayed</span></div><div class="opened">Your app opens ✓</div></div></div><p class="cap" id="cap"></p><p class="sub">Pick the apps that pull you in. Before they open, you get a short prayer.</p>';cta="Next"}
+  else if(s===2){h=head("A moment of honesty","How often do you open your phone before praying?")+list("freq",FREQ,0);ok=has("freq")}
+  else if(s===3){h=head("Make room for what matters","What would you like help with?")+list("goals",GOALS,1);ok=has("goals")}
+  else if(s===4){h=head("What usually gets in the way?")+list("blocks",BLOCK,1);ok=has("blocks")}
+  else if(s===5){h=head("What has been on your heart lately?","Choose up to 3. Your prayers will follow them.")+list("heart",HEART.map(function(x){return x[0]}),1,3)+'<p class="count">'+hs.length+'/3 chosen</p>';ok=hs.length>0}
+  else if(s===6){var n=(A.apps||[]).length;h=head("Which apps get your attention before you even think about it?","Choose the apps where you want a prayer moment first.")+list("apps",APPS,1,0,"apps")+'<p class="count">'+n+(n===1?" app":" apps")+' chosen · change these anytime</p>';cta="Pray before these apps"}
+  else if(s===7){var g=(A.goals||[0]).map(function(j){return GOALP[j]}),w=hs.map(function(j){return HEART[j][1]}),wt=w.length>2?w.slice(0,-1).join(", ")+", and "+w[w.length-1]:w.length>1?w[0]+" and "+w[1]:(w[0]||"what is on your heart");
+    h=head("Reflections")+'<p class="body big">You want to '+g[0]+'. Your phone keeps getting in the way.</p><p class="body center">Bring '+esc(wt)+' to God, one moment at a time.</p><p class="sub">Pray or skip, then continue to your chosen app.</p>';cta="Build this into my day"}
+  else if(s===8){h=head("How would you like to pray?")+list("style",STYLE,0);ok=has("style")}
+  else if(s===9){h=head("Your first prayer","Take a quiet moment. Read it slowly, from the heart.")+'<button class="chip" id="chip">'+FIRST.r+'</button>'+(showV?'<p class="verse-text">'+esc(FIRST.v)+'</p>':'')+'<p class="body">'+esc(FIRST.p)+'</p>';cta="I’ve prayed"}
+  else{var ap=(A.apps||[]).map(function(j){return APPS[j]}).join(", ");h=head("Build it into your morning","One-time setup on iPhone:")+'<ol class="steps"><li><b>Add this app to your Home Screen.</b> In Safari, tap Share, then Add to Home Screen.</li><li><b>Open Shortcuts, then Automation, then New, then App.</b> Choose Is Opened and pick '+(ap?esc(ap):"your apps")+'.</li><li><b>Add the action Open URL</b> with your app link, then turn on Run Immediately.</li></ol><button class="skip" id="copy">Copy my app link</button><p class="note">Web apps can’t block other apps, so this one-time setup is what puts prayer first.</p>';cta="Start my first day"}
+  main.className=anim?"in":"";main.innerHTML=h+foot(cta,ok);
+  if(s===1)demo();
+  var h1=main.querySelector("h1");if(h1&&anim)h1.focus({preventScroll:true});window.scrollTo(0,0);
+}
+function demo(){var sc=document.getElementById("scr"),cap=document.getElementById("cap"),k=0,T=["You reach for an app.","A short prayer appears first.","Pray or skip, then go on."];function show(){sc.setAttribute("data-s",k);cap.textContent=(k+1)+". "+T[k];k=(k+1)%3}show();tick=setInterval(show,2600)}
+function build(r){
+  var g={};r.forEach(function(x){(g[x.area_order]=g[x.area_order]||[]).push(x)});
+  var want=null,hs=A.heart||[];
+  if(hs.length){want=[0];hs.forEach(function(j){HEART[j][2].forEach(function(a){if(want.indexOf(a)<0)want.push(a)})});want=want.filter(function(a){return a!==13});want.push(13)}
+  var ks=want||Object.keys(g).map(Number).sort(function(a,b){return a-b});
+  return ks.filter(function(k){return g[k]}).map(function(k){var l=g[k],x=l[(D+k)%l.length],o=["Lord","Father"][k%2];return{t:x.title,r:x.ref,v:x.verse,p:x.prayer||(o+", Your word says, “"+x.verse+"” ("+x.ref+"). "+x.ask+" In Jesus’ name, amen.")}});
+}
+function load(){
+  bar.hidden=false;main.className="";main.innerHTML='<p class="note">Loading today’s prayers…</p>';
+  var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},10000);
+  fetch(SB+"/rest/v1/devotional_cards?select=area_order,title,ref,verse,ask,prayer,id&active=eq.true&order=area_order,id",{headers:{apikey:KEYPUB,Authorization:"Bearer "+KEYPUB},signal:ctl.signal})
+  .then(function(r){if(!r.ok)throw 0;return r.json()})
+  .then(function(r){clearTimeout(tm);put(CK,r);rows=r;render(true)})
+  .catch(function(){clearTimeout(tm);var c=null;try{c=JSON.parse(localStorage.getItem(CK)||"null")}catch(e){}
+    if(c&&c.length){rows=c;render(true)}else{main.innerHTML='<h1>Can’t load prayers.</h1><p class="sub">Check your connection and try again.</p>'+foot("Try again",true);main.querySelector("#go").dataset.retry=1}});
+}
+function day(anim){
+  clearInterval(tick);if(!rows)return load();
+  if(!C.length){C=build(rows);N=C.length;i=0;prayed=0;showV=false;showP=false;var sy=(A.style||[])[0];sess=sy===0?"g":sy===1?"o":null}
+  bar.hidden=false;var done=i>=N,h="",cta="";
+  fill.style.width=(done?100:(i+1)/N*100)+"%";count.textContent=(done?N:i+1)+"/"+N;back.disabled=i===0;
+  if(!done&&!sess){h=head("How would you like to pray today?")+'<div class="foot"><button class="cta" id="pg">Follow a short prayer</button><button class="cta alt" id="po">Use my own words</button></div>'}
+  else if(!done){var c=C[i],own=sess==="o"&&!showP;
+    h=head(esc(c.t))+'<button class="chip" id="chip" aria-expanded="'+showV+'">'+esc(c.r)+'</button>'+((showV||own)?'<p class="verse-text">'+esc(c.v)+'</p>':'')+'<p class="body">'+(own?'Take a moment and pray freely, in your own words.':esc(c.p))+'</p>'+(sess==="o"?'<button class="skip" id="sp">'+(showP?"Hide the prayer":"Need words? Show a prayer")+'</button>':'')+'<div class="foot"><button class="cta" id="go">I’ve prayed</button><button class="skip" id="skip">Skip for now</button><p class="note">No timer. Your prayer is between you and God.</p></div>'}
+  else{h=head("Your day starts here.")+'<p class="streak">'+(st.streak||0)+'</p><p class="note">'+((st.streak||0)===1?"day in a row":"days in a row")+'</p><p class="body center" style="margin-top:22px">You prayed '+prayed+' of '+N+' today. Come back tomorrow for new prayers.</p><div class="foot"><button class="cta" id="go">Start over</button><button class="cta alt" id="share">Share this app</button><button class="skip" id="chg">Change my answers</button></div>'}
+  main.className=anim?"in":"";main.innerHTML=h;window.scrollTo(0,0);
+}
+function render(anim){if(step<0)day(anim);else onb(anim)}
+function next(){
+  if(step===9)mark();
+  if(step===TOT-1){P.done=true;P.A=A;put(PK,P);step=-1;C=[];render(true);return}
+  step++;render(true)
+}
+main.onclick=function(e){
+  var o=e.target.closest(".opt");
+  if(o){var box=o.parentNode,k=box.getAttribute("data-k"),j=+o.getAttribute("data-j"),multi=box.getAttribute("data-x")==="1",mx=+box.getAttribute("data-m"),a=(A[k]||[]).slice(),p=a.indexOf(j);
+    if(multi){if(p>-1)a.splice(p,1);else if(!mx||a.length<mx)a.push(j)}else a=[j];
+    A[k]=a;P.A=A;put(PK,P);render(false);return}
+  var b=e.target.closest("button");if(!b)return;var id=b.id;
+  if(id==="go"){if(b.dataset.retry){load();return}if(step>=0){next();return}
+    if(i>=N){C=[];render(true)}else{prayed++;mark();i++;showV=false;showP=false;render(true)}}
+  else if(id==="skip"){i++;showV=false;showP=false;render(true)}
+  else if(id==="chip"){showV=!showV;render(false)}
+  else if(id==="sp"){showP=!showP;render(false)}
+  else if(id==="pg"||id==="po"){sess=id==="pg"?"g":"o";render(true)}
+  else if(id==="chg"){reset()}
+  else if(id==="share"){share(b)}
+  else if(id==="copy"){try{navigator.clipboard.writeText(location.origin);b.textContent="Link copied"}catch(x){b.textContent=location.origin}}
+};
+function share(b){var u=location.origin,t="I start my morning with a short prayer before I open any other app. Try it:";if(navigator.share){navigator.share({title:"Devotional Moment",text:t,url:u}).catch(function(){})}else{try{navigator.clipboard.writeText(t+" "+u);b.textContent="Link copied"}catch(x){b.textContent=u}}}
+function reset(){P.done=false;put(PK,P);step=2;C=[];render(true)}
+back.onclick=function(){if(step>0){step--;showV=false;render(true)}else if(step<0&&i>0){i--;showV=false;showP=false;render(false)}};
+document.getElementById("gear").onclick=function(){if(confirm("Change your answers? Your streak stays."))reset()};
+render(true);
+</script>
+</body>
+</html>
