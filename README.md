@@ -1,2 +1,2 @@
-# devotional 
+# devotional
 Study and Meditation App
