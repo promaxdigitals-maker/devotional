@@ -77,7 +77,7 @@ input[type=time]{font:500 17px Figtree,sans-serif;border:1.5px solid var(--line)
 <script>
 var SB="https://nddjtnqgafpzazhpzvpo.supabase.co",KEYPUB="sb_publishable_hr7ViHKvl1bqRJdZ-qlAFg_NnIkIFsv";
 var VAPID="BCAI2C14JHbTBmlBW5bAByIJPnv-bpbhAodKBCftJtRrnrdi9yUO9R1iDQaHYA4D1TxvvfYYBI0R0xahRfz-BLk";
-var KEY="devmoment:v2",CK="devmoment:cards",PK="devmoment:profile",st={},P={done:false,A:{}};
+var KEY="devmoment:v2",CK2="devmoment:cards2",PK="devmoment:profile",st={},P={done:false,A:{}};
 try{st=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
 try{P=JSON.parse(localStorage.getItem(PK)||"null")||P}catch(e){}
 function put(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -86,11 +86,14 @@ var GOALS=["Start my day with God","Pray more consistently","Know what to say wh
 var GOALP=["start your day with God","pray more consistently","know what to say when you pray","stop letting scrolling take over","feel closer to God"];
 var BLOCK=["I scroll without thinking","I get busy and forget","I struggle to find words","I struggle to stay consistent","I feel tired or discouraged"];
 var HEART=[["Money & provision","money and provision",[10]],["Work, business or career","your work, business or career",[10,3]],["Addiction & habits I want to break","the habits you want to break",[5,4]],["Family","your family",[7]],["My future & direction","your future and direction",[2,3]],["Safety & protection","safety and protection",[13]],["Anxiety & uncertainty","anxiety and uncertainty",[11,4]],["My relationship with God","your relationship with God",[0]],["Discipline & consistency","discipline and consistency",[0,3]],["Something else","what is on your heart",[]]];
+var WN=["Hour of Communion","Hour of dealing with the Flesh","Hour of Intercession","Hour of Mercy","Hour of Soul Winning","Hour of Rest","Hour of Warfare"];
+var WT=["6:00 AM","9:00 AM","12:00 PM","3:00 PM","6:00 PM","9:00 PM","12:00 AM"];
+var WS=["Communion","The flesh","Intercession","Mercy","Soul winning","Rest","Warfare"];
 var APPS=["Instagram","TikTok","Facebook","X","YouTube","Snapchat","WhatsApp","Other","Betting apps"];
 var STYLE=[["Follow a short prayer","We’ll give you the words."],["Use my own words","Take the moment and pray freely."],["Choose each time","Pick guided or your own words whenever the prayer moment appears."]];
 var FIRST={r:"John 14:26",v:"But the Comforter, which is the Holy Ghost, whom the Father will send in my name, he shall teach you all things, and bring all things to your remembrance, whatsoever I have said unto you.",p:"Father, I open my heart to You. I can’t stay consistent in my own strength, so I ask for the help of Your Holy Spirit. Strengthen me to put You first. Remind me every morning, before any app and before any other voice, that You are the One I want to talk to first. Draw me back whenever I forget, and make this moment the best part of my day. In Jesus’ name, amen."};
 var ART='<svg class="art" viewBox="0 0 320 250" role="img" aria-label="Sunrise over green hills, with a phone lying face down on the path"><defs><radialGradient id="sg"><stop offset="0" stop-color="#f7d58a"/><stop offset="1" stop-color="#f7d58a" stop-opacity="0"/></radialGradient></defs><g class="sun"><circle cx="160" cy="130" r="118" fill="url(#sg)"/><circle cx="160" cy="130" r="44" fill="#f4c367"/></g><g stroke="#efcd88" stroke-width="3" stroke-linecap="round"><path d="M160 60V44M106 80l-10-11M214 80l10-11M80 112l-15-5M240 112l15-5"/></g><path d="M0 172c60-30 120-34 160-22 50-14 110-6 160 24v76H0z" fill="#c4d6bf"/><path d="M0 204c70-26 140-22 200-8 50 12 90 8 120-6v60H0z" fill="#93b09a"/><path d="M146 250c4-26 2-44 12-62 4-8 10-8 14 0 8 18 26 40 44 62z" fill="#f3ead2"/><g transform="rotate(-16 178 222)"><rect x="166" y="206" width="22" height="38" rx="5" fill="#1f3a2f"/><rect x="169" y="209" width="16" height="32" rx="3" fill="#2f5646"/></g></svg>';
-var A=P.A||{},step=P.done?-1:0,TOT=10,home=true,rows=null;
+var A=P.A||{},step=P.done?-1:0,TOT=10,home=true,rows=null,wrows=null,wk=0,picking=false,quick=false;
 var C=[],N=0,i=0,prayed=0,showV=false,showP=false,sess=null;
 var main=document.getElementById("main"),fill=document.getElementById("fill"),count=document.getElementById("count"),back=document.getElementById("back"),bar=document.getElementById("bar"),track=document.getElementById("track");
 var now=new Date(),today=dkey(now);
@@ -128,30 +131,30 @@ function onb(anim){
     h=head("Reflections")+'<p class="body big">You want to '+g[0]+'. Your phone keeps getting in the way.</p><p class="body center">Bring '+esc(wt)+' to God, one moment at a time.</p><p class="sub">Pray or skip, then continue to your chosen app.</p>';cta="Build this into my day"}
   else if(s===7){h=head("How would you like to pray?")+list("style",STYLE,0);ok=has("style")}
   else if(s===8){h=head("Your first prayer","Take a quiet moment. Read it slowly, from the heart.")+'<button class="chip" id="chip">'+FIRST.r+'</button>'+(showV?'<p class="verse-text">'+esc(FIRST.v)+'</p>':'')+'<p class="body">'+esc(FIRST.p)+'</p>';cta="I’ve prayed"}
-  else{var ap=(A.apps||[]).map(function(j){return APPS[j]}).join(", ");h=head("Build it into your morning","One-time setup, about two minutes.")+'<ol class="steps"><li><b>Add this app to your Home Screen.</b> Safari: Share, then Add to Home Screen.</li><li><b>iPhone:</b> Shortcuts, Automation, New, App. Choose Is Opened and pick '+(ap?esc(ap):"your apps")+'. Add Open URL with this app’s link, and turn on Run Immediately.</li><li><b>Android:</b> use a free automation app such as MacroDroid. Trigger: Application Launched. Action: Open Website with this app’s link.</li></ol>'+remCard()+'<button class="skip" id="copy">Copy my app link</button><p class="note">Web apps can’t block other apps, so this one-time setup is what puts prayer first.</p>';cta="Start my first day"}
+  else{var ap=(A.apps||[]).map(function(j){return APPS[j]}).join(", ");h=head("Build it into your morning","One-time setup, about two minutes.")+'<ol class="steps"><li><b>Add this app to your Home Screen.</b> Safari: Share, then Add to Home Screen.</li><li><b>iPhone:</b> Shortcuts, Automation, New, App. Choose Is Opened and pick '+(ap?esc(ap):"your apps")+'. Add Open URL with this app’s link, and turn on Run Immediately.</li><li><b>Android:</b> use a free automation app such as MacroDroid. Trigger: Application Launched. Action: Open Website with this app’s link.</li></ol>'+remCard()+'<button class="skip" id="copy">Copy my prayer link</button><p class="note">Web apps can’t block other apps, so this one-time setup is what puts prayer first. The link opens a prayer right away, even in Safari.</p>';cta="Start my first day"}
   paint(h+foot(cta,ok),anim);
 }
 function homeV(anim){
   var z=stats(),m=msg(z),hs=A.heart||[];
   bar.hidden=false;track.style.visibility="hidden";back.disabled=true;count.textContent="";
   var wk=z.wk.map(function(w){return'<div class="wd'+(w.on?" on":"")+(w.t?" t":"")+'"><b>'+(w.on?"✓":"")+'</b>'+w.l+'</div>'}).join("");
-  paint(head(greet())+'<p class="streak">'+z.s+'</p><p class="note" style="margin-top:6px">day streak'+(st.best>z.s?' · best '+st.best:'')+'</p><div class="week" aria-label="Last 7 days">'+wk+'</div><div class="card"><strong>'+esc(m[0])+'</strong><p>'+esc(m[1])+'</p></div><p class="count" style="margin:0 0 14px">This week: '+z.n+' of 7 days</p>'+remCard()+'<div class="foot"><button class="cta" id="go">'+(z.since===0?"Pray again":"Pray now")+'</button><button class="cta alt" id="acct">Ask a friend to keep me accountable</button></div>',anim);
+  paint(head(greet())+'<p class="streak">'+z.s+'</p><p class="note" style="margin-top:6px">day streak'+(st.best>z.s?' · best '+st.best:'')+'</p><div class="week" aria-label="Last 7 days">'+wk+'</div><div class="card"><strong>'+esc(m[0])+'</strong><p>'+esc(m[1])+'</p></div>'+watchCard()+'<p class="count" style="margin:0 0 14px">This week: '+z.n+' of 7 days</p>'+remCard()+'<div class="foot"><button class="cta" id="go">'+(z.since===0?"Pray again":"Pray now")+'</button><button class="cta alt" id="acct">Ask a friend to keep me accountable</button></div>',anim);
 }
 function build(r){
   var g={};r.forEach(function(x){(g[x.area_order]=g[x.area_order]||[]).push(x)});
   var want=null,hs=A.heart||[];
-  if(hs.length){want=[0];hs.forEach(function(j){HEART[j][2].forEach(function(a){if(want.indexOf(a)<0)want.push(a)})});want=want.filter(function(a){return a!==13});want.push(13)}
+  if(hs.length){want=[0];hs.forEach(function(j){HEART[j][2].forEach(function(a){if(want.indexOf(a)<0)want.push(a)})});want=want.filter(function(a){return a!==13});want.push(13)}else if(quick){want=[0,2,4,11,13]}
   var ks=want||Object.keys(g).map(Number).sort(function(a,b){return a-b});
   return ks.filter(function(k){return g[k]}).map(function(k){var l=g[k],x=l[(D+k)%l.length],o=["Lord","Father"][k%2];return{t:x.title,r:x.ref,v:x.verse,p:x.prayer||(o+", Your word says, “"+x.verse+"” ("+x.ref+"). "+x.ask+" In Jesus’ name, amen.")}});
 }
+function get(t,q,sig){return fetch(SB+"/rest/v1/"+t+"?"+q,{headers:{apikey:KEYPUB,Authorization:"Bearer "+KEYPUB},signal:sig}).then(function(r){if(!r.ok)throw 0;return r.json()})}
 function load(){
   bar.hidden=false;main.className="";main.innerHTML='<p class="note">Loading today’s prayers…</p>';
   var ctl=new AbortController(),tm=setTimeout(function(){ctl.abort()},10000);
-  fetch(SB+"/rest/v1/devotional_cards?select=area_order,title,ref,verse,ask,prayer,id&active=eq.true&order=area_order,id",{headers:{apikey:KEYPUB,Authorization:"Bearer "+KEYPUB},signal:ctl.signal})
-  .then(function(r){if(!r.ok)throw 0;return r.json()})
-  .then(function(r){clearTimeout(tm);put(CK,r);rows=r;render(true)})
-  .catch(function(){clearTimeout(tm);var c=null;try{c=JSON.parse(localStorage.getItem(CK)||"null")}catch(e){}
-    if(c&&c.length){rows=c;render(true)}else{main.innerHTML='<h1>Can’t load prayers.</h1><p class="sub">Check your connection and try again.</p>'+foot("Try again",true);main.querySelector("#go").dataset.retry=1}});
+  Promise.all([get("devotional_cards","select=area_order,title,ref,verse,ask,prayer,id&active=eq.true&order=area_order,id",ctl.signal),get("watch_cards","select=watch,title,ref,verse,ask,prayer,id&active=eq.true&order=watch,id",ctl.signal)])
+  .then(function(r){clearTimeout(tm);put(CK2,{a:r[0],w:r[1]});rows=r[0];wrows=r[1];render(true)})
+  .catch(function(){clearTimeout(tm);var c=null;try{c=JSON.parse(localStorage.getItem(CK2)||"null")}catch(e){}
+    if(c&&c.a&&c.a.length){rows=c.a;wrows=c.w||[];render(true)}else{main.innerHTML='<h1>Can’t load prayers.</h1><p class="sub">Check your connection and try again.</p>'+foot("Try again",true);main.querySelector("#go").dataset.retry=1}});
 }
 function day(anim){
   if(!rows)return load();
@@ -164,7 +167,7 @@ function day(anim){
   else{var z=stats();h=head("Well done.")+'<p class="streak">'+z.s+'</p><p class="note">'+(z.s===1?"day in a row":"days in a row")+'</p><p class="body center" style="margin-top:22px">You prayed '+prayed+' of '+N+' today. Come back tomorrow for new prayers.</p><div class="foot"><button class="cta" id="go">Done</button><button class="cta alt" id="share">Share my progress</button></div>'}
   paint(h,anim);
 }
-function render(anim){if(step>=0)onb(anim);else if(home)homeV(anim);else day(anim)}
+function render(anim){if(step>=0)onb(anim);else if(wk)watchV(anim);else if(picking)pickV(anim);else if(home)homeV(anim);else day(anim)}
 function next(){
   if(step===8)mark();
   if(step===TOT-1){P.done=true;P.A=A;put(PK,P);step=-1;home=true;render(true);return}
@@ -176,7 +179,7 @@ function u8(b){var p="=".repeat((4-b.length%4)%4),s=atob((b+p).replace(/-/g,"+")
 function tzn(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone}catch(e){return"UTC"}}
 function standalone(){return navigator.standalone||(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)}
 function isIOS(){return/iPad|iPhone|iPod/.test(navigator.userAgent)}
-function sync(sub){P.dev=P.dev||(crypto.randomUUID?crypto.randomUUID():"d"+Date.now()+Math.random().toString(16).slice(2));put(PK,P);return rpc("register_device",{p_id:P.dev,p_sub:sub.toJSON(),p_tz:tzn(),p_time:P.time||"06:30"})}
+function sync(sub){P.dev=P.dev||(crypto.randomUUID?crypto.randomUUID():"d"+Date.now()+Math.random().toString(16).slice(2));put(PK,P);return rpc("register_device",{p_id:P.dev,p_sub:sub.toJSON(),p_tz:tzn(),p_time:P.time||"06:30",p_watches:(A.watches||[]).map(function(j){return j+1})})}
 function enable(b){
   if(isIOS()&&!standalone()){b.textContent="Add to Home Screen first";return}
   if(!("serviceWorker"in navigator&&"PushManager"in window&&"Notification"in window)){b.textContent="Not supported here";return}
@@ -190,14 +193,42 @@ function off(b){
   var f=function(){P.push=false;put(PK,P);render(false)};
   if("serviceWorker"in navigator)navigator.serviceWorker.ready.then(function(r){return r.pushManager.getSubscription()}).then(function(s){return s&&s.unsubscribe()}).then(f,f);else f();
 }
-function remCard(){var t='<input type="time" id="rt" value="'+(P.time||"06:30")+'">';
+function remCard(){var t=(A.watches||[]).length?'':'<input type="time" id="rt" value="'+(P.time||"06:30")+'">';
   if(P.push)return'<div class="card"><div class="row"><label>Reminder'+t+'</label><button class="chip sm" id="pushoff">Turn off</button></div><p style="margin-top:10px">Reminders are on. We’ll nudge you if you haven’t prayed yet.</p></div>';
   return'<div class="card"><div class="row"><label>Reminder'+t+'</label><button class="chip sm" id="push">Turn on</button></div><p style="margin-top:10px">We store a device ID, your reminder time and whether you prayed today, only to remind you. No name or account. <button class="skip" id="ics" style="display:inline;margin:0;padding:0;font-size:14px">Use a calendar alarm instead</button></p></div>'}
+function curWatch(){var h=now.getHours();return h>=21?6:h>=18?5:h>=15?4:h>=12?3:h>=9?2:h>=6?1:7}
+function wcard(n){var l=(wrows||[]).filter(function(x){return x.watch===n});if(!l.length)return null;var x=l[(D+n)%l.length];return{t:x.title,r:x.ref,v:x.verse,p:x.prayer||(["Lord","Father"][n%2]+", Your word says, “"+x.verse+"” ("+x.ref+"). "+x.ask+" In Jesus’ name, amen.")}}
+function wdone(){return(st.wdone&&st.wdone[today])||[]}
+function openWatch(n){if(n<1||n>7)return;wk=n;picking=false;step=-1;render(true)}
+function watchV(anim){
+  if(!wrows)return load();
+  var c=wcard(wk);bar.hidden=false;track.style.visibility="hidden";back.disabled=false;count.textContent="";
+  if(!c){paint(head(WN[wk-1])+'<p class="sub">No prayers are loaded for this hour yet.</p><div class="foot"><button class="cta" id="wback">Back</button></div>',anim);return}
+  paint('<p class="note" style="margin:0">'+WT[wk-1]+'</p>'+head(WN[wk-1])+'<span class="chip">'+esc(c.r)+'</span><p class="verse-text">'+esc(c.v)+'</p><p class="body">'+esc(c.p)+'</p><div class="foot"><button class="cta" id="wamen">Amen, I’ve prayed</button><button class="skip" id="wback">Not now</button></div>',anim);
+}
+function watchCard(){var cw=curWatch(),dn=wdone(),sel=(A.watches||[]).map(function(j){return j+1});
+  var g=WS.map(function(nm,j){var n=j+1;return'<button class="opt'+(dn.indexOf(n)>-1?' on':'')+'" data-w="'+n+'" style="padding:12px 14px;font-size:15px"><span>'+WT[j]+'<small>'+nm+(n===cw?' · now':sel.indexOf(n)>-1?' · reminder':'')+'</small></span><i></i></button>'}).join("");
+  return'<div class="card"><strong>Prayer Watch</strong><p>Now: '+WN[cw-1]+'. '+dn.length+' of 7 kept today.</p><div class="opts apps" style="margin-top:12px">'+g+'</div><button class="skip" id="wpick">Choose my hours and reminders</button></div>'}
+function pickV(anim){
+  bar.hidden=false;track.style.visibility="hidden";back.disabled=false;count.textContent="";
+  var sel=A.watches||[],items=WT.map(function(t,j){return[t+" · "+WN[j]]});
+  var links=sel.map(function(j){return'<button class="chip sm" data-cw="'+(j+1)+'" style="margin:0 8px 8px 0">Copy link: '+WT[j]+'</button>'}).join("");
+  paint(head("Choose your watch hours","Pick the hours you can keep. You’ll get a reminder at each one.")+list("watches",items,1)+'<div class="row" style="margin:12px 0"><button class="chip sm" id="w3">3 core hours</button><button class="chip sm" id="w7">All 7</button></div>'+(sel.length?'<div class="card"><strong>Automations</strong><p>In Shortcuts, add a Time of Day automation for each hour with the action Open URL, and paste that hour’s link. Automations open Safari. For streaks and reminders, tap the notification, which opens the app.</p><div style="margin-top:12px">'+links+'</div></div>':'')+'<div class="foot"><button class="cta" id="wsave">Save my hours</button></div>',anim);
+}
+function wamen(){var l=wdone();if(l.indexOf(wk)<0)l.push(wk);st.wdone={};st.wdone[today]=l;put(KEY,st);mark();if(P.push&&P.dev)rpc("log_watch",{p_id:P.dev,p_date:ymd(now),p_watch:wk});wexit()}
+function wexit(){wk=0;picking=false;C=[];if(!P.done)step=0;else home=true;render(true)}
+function wsave(){P.A=A;put(PK,P);syncNow();picking=false;home=true;render(true)}
+function syncNow(){if(P.push&&"serviceWorker"in navigator)navigator.serviceWorker.ready.then(function(r){return r.pushManager.getSubscription()}).then(function(s){if(s)sync(s)})}
+function route(){var h=location.hash,m=h.match(/^#watch=(\d)$/);
+  if(m){history.replaceState(null,"",location.pathname);openWatch(+m[1])}
+  else if(h==="#pray"){history.replaceState(null,"",location.pathname);quick=true;step=-1;home=false;wk=0;picking=false;C=[];render(true)}}
 function say(t,b){var u=location.origin;if(navigator.share){navigator.share({title:"Devotional Moment",text:t,url:u}).catch(function(){})}else{try{navigator.clipboard.writeText(t+" "+u);b.textContent="Link copied"}catch(x){b.textContent=u}}}
 function ics(b){var t=(P.time||"06:30").split(":"),d=new Date();d.setDate(d.getDate()+1);var p=function(n){return(n<10?"0":"")+n},ds=d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+"T"+t[0]+t[1]+"00",ts=new Date().toISOString().replace(/[-:]/g,"").split(".")[0]+"Z";
   var x=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Devotional Moment//EN","BEGIN:VEVENT","UID:pray-first@"+location.host,"DTSTAMP:"+ts,"DTSTART:"+ds,"DURATION:PT10M","RRULE:FREQ=DAILY","SUMMARY:Pray first","DESCRIPTION:Before any app, open Devotional Moment: "+location.origin,"BEGIN:VALARM","TRIGGER:PT0M","ACTION:DISPLAY","DESCRIPTION:Pray first","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
   try{var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([x],{type:"text/calendar"}));a.download="pray-first.ics";document.body.appendChild(a);a.click();a.remove();b.textContent="Added, check Calendar"}catch(e){b.textContent="Not supported here"}}
 main.onclick=function(e){
+  var wb=e.target.closest("[data-w]");if(wb){openWatch(+wb.getAttribute("data-w"));return}
+  var cl=e.target.closest("[data-cw]");if(cl){try{navigator.clipboard.writeText(location.origin+"/#watch="+cl.getAttribute("data-cw"));cl.textContent="Copied"}catch(x){}return}
   var o=e.target.closest(".opt");
   if(o){var box=o.parentNode,k=box.getAttribute("data-k"),j=+o.getAttribute("data-j"),multi=box.getAttribute("data-x")==="1",mx=+box.getAttribute("data-m"),a=(A[k]||[]).slice(),p=a.indexOf(j);
     if(multi){if(p>-1)a.splice(p,1);else if(!mx||a.length<mx)a.push(j)}else a=[j];
@@ -205,7 +236,7 @@ main.onclick=function(e){
   var b=e.target.closest("button");if(!b)return;var id=b.id;
   if(id==="go"){if(b.dataset.retry){load();return}if(step>=0){next();return}
     if(home){home=false;C=[];render(true);return}
-    if(i>=N){home=true;C=[];render(true)}else{prayed++;mark();i++;showV=false;showP=false;render(true)}}
+    if(i>=N){C=[];quick=false;if(!P.done)step=0;else home=true;render(true)}else{prayed++;mark();i++;showV=false;showP=false;render(true)}}
   else if(id==="skip"){i++;showV=false;showP=false;render(true)}
   else if(id==="chip"){showV=!showV;render(false)}
   else if(id==="sp"){showP=!showP;render(false)}
@@ -215,13 +246,17 @@ main.onclick=function(e){
   else if(id==="ics"){ics(b)}
   else if(id==="push"){enable(b)}
   else if(id==="pushoff"){off(b)}
-  else if(id==="copy"){try{navigator.clipboard.writeText(location.origin);b.textContent="Link copied"}catch(x){b.textContent=location.origin}}
+  else if(id==="wamen"){wamen()}else if(id==="wback"){wexit()}else if(id==="wpick"){picking=true;render(true)}else if(id==="wsave"){wsave()}
+  else if(id==="w3"){A.watches=[0,2,4];P.A=A;put(PK,P);render(false)}else if(id==="w7"){A.watches=[0,1,2,3,4,5,6];P.A=A;put(PK,P);render(false)}
+  else if(id==="copy"){try{navigator.clipboard.writeText(location.origin+"/#pray");b.textContent="Link copied"}catch(x){b.textContent=location.origin+"/#pray"}}
 };
-main.onchange=function(e){if(e.target.id==="rt"&&e.target.value){P.time=e.target.value;put(PK,P);if(P.push&&"serviceWorker"in navigator)navigator.serviceWorker.ready.then(function(r){return r.pushManager.getSubscription()}).then(function(s){if(s)sync(s)})}};
+main.onchange=function(e){if(e.target.id==="rt"&&e.target.value){P.time=e.target.value;put(PK,P);syncNow()}};
 function reset(){P.done=false;put(PK,P);step=1;C=[];render(true)}
-back.onclick=function(){if(step>0){step--;showV=false;render(true)}else if(step<0&&!home){if(i>0){i--;showV=false;showP=false;render(false)}else{home=true;C=[];render(true)}}};
+back.onclick=function(){if(step<0&&(wk||picking)){wexit();return}if(step>0){step--;showV=false;render(true)}else if(step<0&&!home){if(i>0){i--;showV=false;showP=false;render(false)}else{home=true;C=[];render(true)}}};
 document.getElementById("gear").onclick=function(){if(confirm("Change your answers? Your streak stays."))reset()};
-render(true);
+window.addEventListener("hashchange",route);
+if("serviceWorker"in navigator)navigator.serviceWorker.addEventListener("message",function(e){var d=e.data||{};if(d.watch)openWatch(d.watch)});
+if(/^#(watch=\d|pray)$/.test(location.hash))route();else render(true);
 </script>
 </body>
 </html>
