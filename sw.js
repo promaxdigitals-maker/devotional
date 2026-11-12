@@ -1,6 +1,6 @@
 self.addEventListener("push",function(e){
   var d={};try{d=e.data.json()}catch(x){}
-  e.waitUntil(self.registration.showNotification(d.title||"Pray first",{body:d.body||"Take a moment with God before you open any other app.",icon:"/icon-180.png",badge:"/icon-180.png",tag:d.tag||"pray-first",data:{url:d.url||"/"}}));
+  e.waitUntil(self.registration.showNotification(d.title||"Pray first",{body:d.body||"Take a moment with God before you open any other app.",icon:"/icon-180.png",badge:"/icon-180.png",tag:d.tag||"pray-first",renotify:true,requireInteraction:true,vibrate:[300,120,300,120,300],data:{url:d.url||"/"}}));
 });
 self.addEventListener("notificationclick",function(e){
   e.notification.close();
